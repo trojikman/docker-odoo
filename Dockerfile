@@ -9,9 +9,12 @@ RUN apt-get update  \
         && apt-get install -y git
 
 # IT-Projects repos
-RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/access-addons.git /mnt/extra-addons
-RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/saas-addons.git /mnt/extra-addons
+RUN mkdir -p /mnt/addons \
+        && chown -R odoo /mnt/addons
 
-# OCA repos https://github.com/OCA/queue.git
-RUN git clone --depth=1 -b 13.0 https://github.com/OCA/queue.git /mnt/extra-addons
+RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/access-addons.git /mnt/addons/access-addons && chown -R odoo /mnt/addons/access-addons
+RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/saas-addons.git /mnt/addons/saas-addons && chown odoo /mnt/addons/saas-addons
+
+# OCA repos
+RUN git clone --depth=1 -b 13.0 https://github.com/OCA/queue.git /mnt/addons/queue && chown odoo /mnt/addons/queue
 USER odoo
