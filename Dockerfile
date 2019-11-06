@@ -8,6 +8,9 @@ RUN pip3 install python-slugify
 RUN apt-get update  \
         && apt-get install -y git
 
+# WDB
+RUN pip3 install wdb
+
 # IT-Projects repos
 RUN mkdir -p /mnt/addons \
         && chown -R odoo /mnt/addons
