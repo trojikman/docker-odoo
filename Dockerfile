@@ -1,17 +1,14 @@
-# Здесь я собирал другой образ, на базе основного odoo, что бы была поддержка более нового питона
-#FROM odoo:12.0
-FROM odoo_py:12.0
+FROM odoo:12.0
 
 USER root
 
+# Python Dependencies
+# TODO: сделать автоматическую установку зависимостей из файлов requirenments
 RUN pip3 install python-slugify
 
 #RUN mkdir -p /mnt/extra-addons && chown -R odoo /mnt/extra-addons
 RUN apt-get update  \
         && apt-get install -y git
-
-# Custom Python packages
-RUN pip3 install ics
 
 # WDB
 RUN pip3 install wdb
@@ -25,4 +22,6 @@ RUN git clone --depth=1 -b 12.0 https://github.com/it-projects-llc/saas-addons.g
 
 # OCA repos
 RUN git clone --depth=1 -b 12.0 https://github.com/OCA/queue.git /mnt/addons/queue && chown odoo /mnt/addons/queue
+RUN git clone --depth=1 -b 12.0 https://github.com/OCA/web.git /mnt/addons/web && chown odoo /mnt/addons/web
+
 USER odoo

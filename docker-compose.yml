@@ -1,17 +1,38 @@
 version: '3.4'
 services:
   web:
-    image: odoo_dev:13.0
+    tty: true
+    image: odoo_base:12.0
     depends_on:
       - db
+      - wdb
     ports:
       - "8069:8069"
     volumes:
+      - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
-#      - ./addons:/mnt/extra-addons
+      - ../odoo12/saas-addons:/mnt/addons/saas-addons
+    environment:
+      - WDB_SOCKET_SERVER=wdb
+      - WDB_NO_BROWSER_AUTO_OPEN=True
+    command: ['-d', 'dev', '--init', 'saas', '--test-enable']
+
   db:
     image: postgres:10
+    # Добавил это, чтобы не выводить логи постгрес, но думаю, что можно сделать это как то по правильнее
+    logging:
+      driver: 'none'
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
       - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+  wdb:
+    image: kozea/wdb:3.3.0
+    ports: ['1984:1984']
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:
