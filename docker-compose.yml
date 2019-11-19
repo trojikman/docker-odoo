@@ -8,6 +8,8 @@ services:
       - wdb
     ports:
       - "8069:8069"
+      # Этот порт нужен для лонгполлинга
+      - "8072:8072"
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
@@ -15,11 +17,14 @@ services:
     environment:
       - WDB_SOCKET_SERVER=wdb
       - WDB_NO_BROWSER_AUTO_OPEN=True
-    command: ['-d', 'dev', '--init', 'saas', '--test-enable']
+      - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
+    # TODO: unify parameter passing for different cases to avoid making different branches
+    # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
+    command: ['-d', 'saas', '--init', 'saas', '--db-filter=^%d$$', '--load=web,queue_job', '--log-handler=odoo.addons.queue_job:DEBUG', '--workers=3']
 
   db:
     image: postgres:10
-    # Добавил это, чтобы не выводить логи постгрес, но думаю, что можно сделать это как то по правильнее
+    # Добавил это, чтобы не выводить логи постгрес, но думаю, что можно сделать это как-то получше
     logging:
       driver: 'none'
     environment:
