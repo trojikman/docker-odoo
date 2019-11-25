@@ -24,9 +24,6 @@ services:
 
   db:
     image: postgres:10
-    # Добавил это, чтобы не выводить логи постгрес, но думаю, что можно сделать это как-то получше
-    logging:
-      driver: 'none'
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
