@@ -3,22 +3,19 @@ version: '3.4'
 x-default:
   &default-odoo
   tty: true
-  image: odoo_base:12.0
+  image: odoo_base:13.0
   depends_on:
     - db
     - wdb
   ports:
     - "8069:8069"
-    # Этот порт нужен для лонгполлинга
     - "8072:8072"
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../odoo12/saas-addons:/mnt/addons/saas-addons
+    - ../odoo13/access-addons:/mnt/addons/access-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
-    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
-    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
-    - ../odoo12/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
+#    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 
   environment:
     - WDB_SOCKET_SERVER=wdb
@@ -34,10 +31,10 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'saas', '--init', 'saas', '--db-filter=^%d$$', '--load=web,queue_job',  '--workers=3',
-              '--log-handler=odoo.addons.base.models.ir_module:DEBUG',
-              '--log-handler=odoo.modules.module:DEBUG',
+    command: ['-d', 'access_apps', '--init', 'access_apps', '--db-filter=.*', '--workers=0',
     ]
+#'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
+#'--log-handler=odoo.modules.module:DEBUG',
 #'--log-handler=odoo.models:DEBUG',
 #'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
 #'--log-handler=odoo.modules.registry:DEBUG',
