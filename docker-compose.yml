@@ -12,13 +12,16 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
-#      - ../odoo12/enterprise_modules:/usr/lib/python3/dist-packages/odoo/addons
+#      - ../odoo12/odoo/addons/stock:/usr/lib/python3/dist-packages/odoo/addons/stock
       - ../odoo12/extra-addons:/mnt/extra-addons
-#      - ../odoo12/enterprise_modules:/mnt/extra-addons
+      - ../odoo12/addons-dev:/mnt/addons/misc-addons
     environment:
       - WDB_SOCKET_SERVER=wdb
       - WDB_NO_BROWSER_AUTO_OPEN=True
-    command: ['-d', 'smlnsk', '--init', 'mrp_workorder', 'mrp_eurodesign', '--db-filter=.*', '--workers=0']
+#    command: ['-d', 'stock_round', '--init', 'web_enterprise,mrp_workorder,stock_round', '--db-filter=.*', '--workers=0']
+#    command: ['-d', 'smlnsk', '--init', 'web_enterprise,mrp_workorder,mrp_preparing', '--db-filter=.*', '--workers=0']
+  #    command: ['-d', 'smlnsk', '--init', 'web_enterprise,mrp_workorder,mrp_scrap', '--db-filter=.*', '--workers=0']
+    command: ['-d', 'smlnsk', '--init', 'web_enterprise,mrp_workorder_qty', '--db-filter=.*', '--workers=0']
 
   db:
     image: postgres:10
