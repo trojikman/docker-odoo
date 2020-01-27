@@ -13,9 +13,9 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../odoo13/access-addons:/mnt/addons/access-addons
-#    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
-#    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
+#    - ../odoo13/access-addons:/mnt/addons/access-addons
+    - ../odoo13/enterprise/odoo/odoo/addons:/usr/lib/python3/dist-packages/odoo/addons
+    - ../odoo13/custom-addons:/mnt/addons/custom-addons
 
   environment:
     - WDB_SOCKET_SERVER=wdb
@@ -31,8 +31,7 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'access_apps', '--init', 'access_apps', '--db-filter=.*', '--workers=0',
-    ]
+    command: ['-d', 'access_apps', '--init', 'sugarodoo', '--db-filter=.*', '--workers=0',]
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
 #'--log-handler=odoo.modules.module:DEBUG',
 #'--log-handler=odoo.models:DEBUG',
