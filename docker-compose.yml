@@ -3,7 +3,7 @@ version: '3.4'
 x-default:
   &default-odoo
   tty: true
-  image: odoo_base:13.0
+  build: .
   depends_on:
     - db
     - wdb
@@ -14,8 +14,7 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
     - ../odoo13/access-addons:/mnt/addons/access-addons
-#    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
-#    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
+#    - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
     - WDB_SOCKET_SERVER=wdb
@@ -41,7 +40,6 @@ services:
 #'--log-handler=odoo.fields:DEBUG',
 #'--log-handler=odoo.modules.loading:DEBUG',
 #'--log-handler=odoo.addons.queue_job:DEBUG',
-
   db:
     image: postgres:10
     environment:
