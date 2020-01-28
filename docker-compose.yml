@@ -2,7 +2,7 @@ version: '3.4'
 services:
   web:
     tty: true
-    image: odoo_base:12.0
+    build: .
     depends_on:
       - db
       - wdb
@@ -13,14 +13,14 @@ services:
     volumes:
       - odoo-web-data:/var/lib/odoo
       - ./config:/etc/odoo
-      - ../odoo12/saas-addons:/mnt/addons/saas-addons
+      - ../odoo12/pos-addons:/mnt/addons/pos-addons
     environment:
       - WDB_SOCKET_SERVER=wdb
       - WDB_NO_BROWSER_AUTO_OPEN=True
       - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'saas', '--init', 'saas', '--db-filter=^%d$$', '--load=web,queue_job', '--log-handler=odoo.addons.queue_job:DEBUG', '--workers=3']
+    command: ['-d', 'pos', '--init', 'pos_multi_session', '--db-filter=.*', '--workers=2']
 
   db:
     image: postgres:10
