@@ -1,3 +1,3 @@
 # docker-odoo
 
-`docker build -t odoo_base:13.0 .` 
+To rebuild image you must use `docker-compose build` or `docker-compose up --build`
