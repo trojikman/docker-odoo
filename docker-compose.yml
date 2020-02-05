@@ -13,8 +13,10 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../odoo13/access-addons:/mnt/addons/access-addons
-#    - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
+    - ../access-addons:/mnt/addons/access-addons
+    - ../misc-addons:/mnt/addons/misc-addons
+    - ../saas-addons:/mnt/addons/saas-addons
+  #    - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
     - WDB_SOCKET_SERVER=wdb
@@ -24,15 +26,26 @@ x-default:
 services:
   dev:
     <<: *default-odoo
-    command: ['--db-filter=.*']
+    command: ['-d', 'saas_test',
+              '--init', 'saas',
+              '--db-filter=.*',
+              '--workers=0',
+              '--load=web,queue_job',
+              '--test-enable',
+              '--log-handler=odoo.addons.queue_job:DEBUG',
+    ]
 
   web:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'access_apps', '--init', 'access_apps', '--db-filter=.*', '--workers=0',
-    ]
-#'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
+    command: ['-d', 'saas',
+              '--init', 'saas',
+              '--db-filter=^%d$$',
+              '--workers=0',
+              '--load=web,queue_job',]
+
+  #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
 #'--log-handler=odoo.modules.module:DEBUG',
 #'--log-handler=odoo.models:DEBUG',
 #'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
