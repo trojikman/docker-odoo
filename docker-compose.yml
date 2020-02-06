@@ -13,7 +13,7 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../saas-addons:/mnt/addons/saas-addons
+#    - ../saas-addons:/mnt/addons/saas-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
