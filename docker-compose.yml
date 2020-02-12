@@ -16,12 +16,14 @@ x-default:
     - ../access-addons:/mnt/addons/access-addons
     - ../misc-addons:/mnt/addons/misc-addons
     - ../saas-addons:/mnt/addons/saas-addons
-  #    - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
+    - ../odoo/odoo/service/db.py:/usr/lib/python3/dist-packages/odoo/service/db.py
+    - ../odoo/odoo/modules/registry.py:/usr/lib/python3/dist-packages/odoo/modules/registry.py
+    - ../odoo/odoo/modules/loading.py:/usr/lib/python3/dist-packages/odoo/modules/loading.py
 
   environment:
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
-#    - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
+    - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
 
 services:
   dev:
@@ -33,6 +35,7 @@ services:
               '--load=web,queue_job',
               '--test-enable',
               '--log-handler=odoo.addons.queue_job:DEBUG',
+              '--log-handler=odoo.addons.saas:DEBUG',
     ]
 
   web:
