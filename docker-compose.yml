@@ -13,7 +13,7 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../odoo13/access-addons:/mnt/addons/access-addons
+    - ../website-addons:/mnt/addons/website-addons
 #    - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
@@ -30,7 +30,7 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'access_apps', '--init', 'access_apps', '--db-filter=.*', '--workers=0',
+    command: ['-d', 'access_apps', '--init', 'website_login_background', '--db-filter=.*', '--workers=0',
     ]
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
 #'--log-handler=odoo.modules.module:DEBUG',
