@@ -13,24 +13,23 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../odoo13/access-addons:/mnt/addons/access-addons
-#    - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
+    - ../misc-addons:/mnt/addons/misc-addons
+  #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
-#    - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
 
 services:
   dev:
     <<: *default-odoo
-    command: ['--db-filter=.*']
+    command: ['-d', 'test', '--init', 'ir_attachment_s3', '--db-filter=.*', '--test-enable']
 
   web:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'access_apps', '--init', 'access_apps', '--db-filter=.*', '--workers=0',
+    command: ['-d', 'misc', '--init', 'ir_attachment_s3', '--db-filter=.*', '--workers=0',
     ]
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
 #'--log-handler=odoo.modules.module:DEBUG',
