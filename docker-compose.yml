@@ -14,10 +14,10 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ~/Projects/c13/vendor/it-projects-llc/saas-addons:/mnt/addons/saas-addons
-    - ~/Projects/c13/vendor/it-projects-llc/access-addons:/mnt/addons/access-addons
-    - ~/Projects/c13/vendor/OCA/web:/mnt/addons/web
-    - ~/Projects/c13/vendor/OCA/queue:/mnt/addons/queue
+    - ./vendor/it-projects-llc/saas-addons:/mnt/addons/saas-addons
+    - ./vendor/it-projects-llc/access-addons:/mnt/addons/access-addons
+    - ./vendor/OCA/web:/mnt/addons/web
+    - ./vendor/OCA/queue:/mnt/addons/queue
 
   environment:
     - WDB_SOCKET_SERVER=wdb
@@ -33,7 +33,7 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['--dev', 'wdb,reload,qweb,werkzeug,xml', '-d', 'saas', '--init', 'saas_demo', '--db-filter=^%d$$', '--load=web,queue_job',  '--workers=3',
+    command: ['--dev', 'wdb,reload,qweb,werkzeug,xml', '-d', 'saas', '--init', 'saas', '--db-filter=^%d$$', '--load=web,queue_job',  '--workers=3',
               '--log-handler=odoo.addons.queue_job:DEBUG',
     ]
 #'--log-handler=odoo.models:DEBUG',
