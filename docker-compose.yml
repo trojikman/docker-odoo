@@ -7,29 +7,26 @@ x-default:
   depends_on:
     - db
     - wdb
+    - proxy
   ports:
     - "8069:8069"
     - "8072:8072"
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../misc-addons:/mnt/addons/misc-addons
-  #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
+    - ./vendor/it-projects-llc/saas-addons:/mnt/addons/saas-addons
+    - ./vendor/it-projects-llc/access-addons:/mnt/addons/access-addons
+    - ./vendor/OCA/web:/mnt/addons/web
+    - ./vendor/OCA/queue:/mnt/addons/queue
 
   environment:
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
 
 services:
-  dev:
-    <<: *default-odoo
-    command: ['-d', 'test', '--init', 'ir_attachment_s3', '--db-filter=.*', '--test-enable']
-
-  web:
+  odoo:
     << : *default-odoo
-    # TODO: unify parameter passing for different cases to avoid making different branches
-    # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'misc', '--init', 'ir_attachment_s3', '--db-filter=.*', '--workers=0',
+    command: ['--dev', 'wdb,reload,qweb,werkzeug,xml', '-d', 'dbname', '--init', 'mail',
     ]
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
 #'--log-handler=odoo.modules.module:DEBUG',
@@ -48,6 +45,13 @@ services:
       - PGDATA=/var/lib/postgresql/data/pgdata
     volumes:
       - odoo-db-data:/var/lib/postgresql/data/pgdata
+    ports:
+      - "5433:5432"
+
+  proxy:
+    image: envoyproxy/envoy-alpine:v1.10.0
+    ports: ['81:80', '80:80', '9901:9901']
+    volumes: ['./envoy.yaml:/etc/envoy/envoy.yaml']
   wdb:
     image: kozea/wdb:3.3.0
     ports: ['1984:1984']
