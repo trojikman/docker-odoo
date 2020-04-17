@@ -13,7 +13,7 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../odoo12/saas-addons:/mnt/addons/saas-addons
+    - ../sync-addons-store:/mnt/addons/sync-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
@@ -25,18 +25,16 @@ x-default:
 #    - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
 
 services:
-  dev:
-    <<: *default-odoo
-    command: ['--db-filter=.*']
+  # dev:
+  #   <<: *default-odoo
+  #   command: ['--db-filter=.*']
 
   web:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'saas', '--init', 'saas', '--db-filter=^%d$$', '--load=web,queue_job',  '--workers=3',
-              '--log-handler=odoo.addons.base.models.ir_module:DEBUG',
-              '--log-handler=odoo.modules.module:DEBUG',
-    ]
+    command: ['-d', 'sync', '--init', 'openapi', '--db-filter=^%d$$', '--load=web,openapi',  '--workers=2',
+    ] # '--init', 'openapi',
 #'--log-handler=odoo.models:DEBUG',
 #'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
 #'--log-handler=odoo.modules.registry:DEBUG',
