@@ -14,10 +14,7 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ./vendor/it-projects-llc/saas-addons:/mnt/addons/saas-addons
-    - ./vendor/it-projects-llc/access-addons:/mnt/addons/access-addons
-    - ./vendor/OCA/web:/mnt/addons/web
-    - ./vendor/OCA/queue:/mnt/addons/queue
+    - ./vendor/it-projects-llc/misc-addons:/mnt/addons/misc-addons
 
   environment:
     - WDB_SOCKET_SERVER=wdb
@@ -26,7 +23,8 @@ x-default:
 services:
   odoo:
     << : *default-odoo
-    command: ['--dev', 'wdb,reload,qweb,werkzeug,xml', '-d', 'web_image_cache', '--init', 'web_image_cache,ir_attachment_url,ir_attachment_s3,website_sale',
+    command: ['--dev', 'wdb,reload,qweb,werkzeug,xml', '-d', 'web_image_cache',
+    '--init', 'ir_attachment_url,ir_attachment_s3',
    '--log-handler=odoo.addons.web_image_cache:DEBUG',
    '--log-handler=odoo.addons.ir_attachment_url:DEBUG',
    '--log-handler=odoo.addons.ir_attachment_s3:DEBUG',

@@ -142,7 +142,7 @@ static_resources:
                     # 15s is hardly enough, but expose bad design.
                     # NOT FOR PRODUCTION!!!
                     # consider using OCA/queue
-                    timeout: 15s
+                    timeout: 1500s
                 }
             - domains: [cdnjs.cloudflare.com]
               name: local_service
