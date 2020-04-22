@@ -5,7 +5,7 @@ USER root
 # Python Dependencies
 # TODO: сделать автоматическую установку зависимостей из файлов requirenments
 # for ir_attachment_s3
-RUN pip3 install boto3
+#RUN pip3 install boto3
 
 #RUN mkdir -p /mnt/extra-addons && chown -R odoo /mnt/extra-addons
 RUN apt-get update  \
@@ -22,6 +22,7 @@ RUN mkdir -p /mnt/addons \
 RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/access-addons.git /mnt/addons/access-addons && chown -R odoo /mnt/addons/access-addons
 RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/pos-addons.git /mnt/addons/pos-addons && chown odoo /mnt/addons/pos-addons
 RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/misc-addons.git /mnt/addons/misc-addons && chown odoo /mnt/addons/misc-addons
+RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/mail-addons.git /mnt/addons/mail-addons && chown odoo /mnt/addons/mail-addons
 
 
 # OCA repos
