@@ -5,7 +5,7 @@ USER root
 # Python Dependencies
 # TODO: сделать автоматическую установку зависимостей из файлов requirenments
 # for ir_attachment_s3
-#RUN pip3 install boto3
+RUN pip3 install boto3
 
 #RUN mkdir -p /mnt/extra-addons && chown -R odoo /mnt/extra-addons
 RUN apt-get update  \
