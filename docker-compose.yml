@@ -14,6 +14,7 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
     - ../mail-addons-store:/mnt/addons/mail-addons
+    - ../misc-addons:/mnt/addons/misc-addons
   #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
