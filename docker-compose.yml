@@ -13,7 +13,8 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../website-addons:/mnt/addons/website-addons
+    - ../mail-addons:/mnt/addons/mail-addons
+#    - ../enterprise/12.0:/mnt/addons/enterprise
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
@@ -25,15 +26,16 @@ x-default:
 #    - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
 
 services:
-  dev:
-    <<: *default-odoo
-    command: ['--db-filter=.*']
+#  dev:
+#    <<: *default-odoo
+#    command: ['--db-filter=.*']
 
   web:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'addons', '--init', 'website_event_attendee_signup', '--db-filter=.*',  '--workers=0',] # 
+    command: ['-d', 'website', '--init', 'mail_sent', '--db-filter=.*',  '--workers=0',] #
+#    '--init', 'mail_sent',
 #'--log-handler=odoo.models:DEBUG',
 #'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
 #'--log-handler=odoo.modules.registry:DEBUG',
