@@ -14,7 +14,7 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
     - ../mail-addons:/mnt/addons/mail-addons
-#    - ../enterprise/12.0:/mnt/addons/enterprise
+    - ../enterprise/12.0:/mnt/addons/enterprise
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
@@ -26,9 +26,9 @@ x-default:
 #    - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
 
 services:
-#  dev:
-#    <<: *default-odoo
-#    command: ['--db-filter=.*']
+  dev:
+    <<: *default-odoo
+    command: ['--db-filter=.*', '-d', 'test_mail_sent', '--init', 'mail_sent', '--test-enable']
 
   web:
     << : *default-odoo
