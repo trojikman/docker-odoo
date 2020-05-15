@@ -13,7 +13,7 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../sync-addons-store:/mnt/addons/sync-addons
+    - ../sync-addons:/mnt/addons/sync-addons
   #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
@@ -23,7 +23,7 @@ x-default:
 services:
   dev:
     <<: *default-odoo
-    command: ['-d', 'test', '--init', 'ir_attachment_s3', '--db-filter=.*', '--test-enable']
+    command: ['-d', 'openapi', '--init', 'openapi', '--db-filter=.*', '--test-enable']
 
   web:
     << : *default-odoo
