@@ -24,7 +24,8 @@ services:
   odoo:
     << : *default-odoo
     command: ['--dev', 'wdb,reload,qweb,werkzeug,xml', '-d', 'web_image_cache',
-    '--init', 'ir_attachment_url,ir_attachment_s3',
+    '-i', 'ir_attachment_url',
+    '--test-enable', '--stop-after-init',
    '--log-handler=odoo.addons.web_image_cache:DEBUG',
    '--log-handler=odoo.addons.ir_attachment_url:DEBUG',
    '--log-handler=odoo.addons.ir_attachment_s3:DEBUG',
