@@ -13,8 +13,8 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../mail-addons-store:/mnt/addons/mail-addons
-    - ../misc-addons:/mnt/addons/misc-addons
+#    - ../mail-addons-store:/mnt/addons/mail-addons
+    - ../pos-addons:/mnt/addons/pos-addons
   #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
@@ -24,13 +24,13 @@ x-default:
 services:
   dev:
     <<: *default-odoo
-    command: ['-d', 'test', '--init', 'ir_attachment_s3', '--db-filter=.*', '--test-enable']
+    command: ['-d', 'pos', '--init', 'pos_product_available', '--db-filter=.*', '--test-enable']
 
   web:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'mail', '--init', 'mail_multi_website', '--db-filter=.*', '--workers=0',
+    command: ['-d', 'pos', '--init', 'pos_product_available', '--db-filter=.*', '--workers=0',
     ]
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
 #'--log-handler=odoo.modules.module:DEBUG',
