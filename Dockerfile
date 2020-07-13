@@ -7,6 +7,9 @@ USER root
 # for ir_attachment_s3
 #RUN pip3 install boto3
 
+# for email_headers
+RUN pip3 install pycryptodome
+
 #RUN mkdir -p /mnt/extra-addons && chown -R odoo /mnt/extra-addons
 RUN apt-get update  \
         && apt-get install -y git
