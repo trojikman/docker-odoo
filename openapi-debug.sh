@@ -32,11 +32,17 @@ curl -X GET "http://localhost/api/v1/demo/res.partner.name/22" -H "accept: appli
 -H "authorization: Basic b3BlbmFwaTo1ZWIwYTI4My0yZjU5LTQzNDgtODVlZi0xNmUxZmZjZGJkMDI="
 
 # Joe
-curl -X GET "http://localhost/api/v1/demo/res.partner/27" -H "accept: application/json" \
+curl -X GET "http://localhost/api/v1/demo/res.partner/41" -H "accept: application/json" \
 -H "authorization: Basic b3BlbmFwaTo2OGI2MzZmNS1lM2NlLTRkZjQtYWE4Ni0wYWRmZGI2NTM0N2Y="
 
 
-b3BlbmFwaTo2OGI2MzZmNS1lM2NlLTRkZjQtYWE4Ni0wYWRmZGI2NTM0N2Y=
+b3BlbmFwaTo0MGQ4ZjRjOS01ZTY5LTQzY2YtODI5NS03ODM3ODIzODU3YmU=
 
 
-curl -X GET "http://openapi.127.0.0.1.nip.io/api/v1/demo/res.partner/1" -H "accept: application/json" -H "authorization: Basic b3BlbmFwaToJOTcwYjA0ZTgtNDZkZS00N2JhLWJjZGYtODZlNzI5M2RiMTBi"
+curl -X GET "http://openapi.127.0.0.1.nip.io/api/v1/demo/res.partner/1" \
+-H "accept: application/json" -H "authorization: Basic b3BlbmFwaTo0MGQ4ZjRjOS01ZTY5LTQzY2YtODI5NS03ODM3ODIzODU3YmU="
+
+# Заполнение полей
+curl -X PUT -H "Authorization: Basic b3BlbmFwaToxYjE5Y2ZkOC1iMjBhLTRhNmUtOTJkMy0xYzYzNDU2ZGI3ODE=" \
+-H "Content-Type: application/json" -H "Accept: */*" \
+-d '{ "child_ids": [[0, 0, {"name": "new username"}]]}' "http://localhost/api/v1/demo/res.partner/10"
