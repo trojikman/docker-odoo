@@ -13,10 +13,7 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../mail-addons-store:/mnt/addons/mail-addons
-#    - ../misc-addons:/mnt/addons/misc-addons
-    - ../misc-addons-store:/mnt/addons/misc-addons
-    - ../access-addons-store:/mnt/addons/access-addons
+    - ../vendor/misc-addons:/mnt/addons/misc-addons
 
   #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
@@ -33,8 +30,9 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'mail', '--init', 'web_debranding', '--db-filter=.*', '--workers=0',
-    ]
+    command: ['-d', 'mail', '--init', 'ir_attachment_s3', '--db-filter=.*', '--workers=3']
+    env_file:
+      - ../aws/aws-credentials.env
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
 #'--log-handler=odoo.modules.module:DEBUG',
 #'--log-handler=odoo.models:DEBUG',
