@@ -7,8 +7,8 @@ curl -X PATCH "http://sync.127.0.0.1.nip.io/api/v1/demo/res.partner/call/search"
 curl -X PATCH "http://openapi.127.0.0.1.nip.io/api/v1/demo/res.partner/call/search_count" -H "accept: application/json" -H "authorization: Basic b3BlbmFwaTo3NTI1MjEzNC1iOGU4LTQzMGQtYTRmNy1hMGQ3NDA1ZmExNGM=" -H "Content-Type: application/json" -d "{ \"args\": [], \"kwargs\": {}}"
 
 
-curl -X PATCH "http://openapi.127.0.0.1.nip.io/api/v1/demo/res.partner/call/search" -H "accept: application/json" \
--H "authorization: Basic b3BlbmFwaToxMTdkMGYxZC1jNDg5LTRmZjEtYjZhZi0wMzcwZmZjZDI5NTY=" -H "Content-Type: application/json" \
+curl -X PATCH "http://localhost/api/v1/demo/res.partner/call/search" -H "accept: application/json" \
+-H "authorization: Basic b3BlbmFwaTo2ODhkZjAxYS1kYzQwLTRjYzgtYTRjNS03MGM5MDBjOGQzMjA=" -H "Content-Type: application/json" \
 -d '{ "args": [[["is_company", "=", "True" ]]]}'
 
 curl -X PATCH -H "Authorization: Basic b3BlbmFwaTpkYmUwZDllMC1jNGIwLTQxNGYtOWM0Ny0wZmNjNTRmZjc3NDA=" \
@@ -35,14 +35,14 @@ curl -X GET "http://localhost/api/v1/demo/res.partner.name/22" -H "accept: appli
 curl -X GET "http://localhost/api/v1/demo/res.partner/41" -H "accept: application/json" \
 -H "authorization: Basic b3BlbmFwaTo2OGI2MzZmNS1lM2NlLTRkZjQtYWE4Ni0wYWRmZGI2NTM0N2Y="
 
+curl -v GET "https://dev.website.local/api/v1/demo/res.partner/1" \
+-H "accept: application/json" -H "authorization: Basic b3BlbmFwaTo2OTZmMjE5Ny1iZWMxLTQ3NTQtODgzNy01ZmY3ZGYzOGJkODI="
 
-b3BlbmFwaTo0MGQ4ZjRjOS01ZTY5LTQzY2YtODI5NS03ODM3ODIzODU3YmU=
-
-
-curl -X GET "http://openapi.127.0.0.1.nip.io/api/v1/demo/res.partner/1" \
--H "accept: application/json" -H "authorization: Basic b3BlbmFwaTo0MGQ4ZjRjOS01ZTY5LTQzY2YtODI5NS03ODM3ODIzODU3YmU="
+curl GET "https://dev.website.local/api/v1/demo/res.partner/1" \
+-H "accept: application/json" -H "authorization: Basic b3BlbmFwaTpkYTc4ZjllZi1jNmU4LTQ3YjctYjIzOC1kOGQwNjBkNjA3YmM="
 
 # Заполнение полей
 curl -X PUT -H "Authorization: Basic b3BlbmFwaToxYjE5Y2ZkOC1iMjBhLTRhNmUtOTJkMy0xYzYzNDU2ZGI3ODE=" \
 -H "Content-Type: application/json" -H "Accept: */*" \
 -d '{ "child_ids": [[0, 0, {"name": "new username"}]]}' "http://localhost/api/v1/demo/res.partner/10"
+
