@@ -15,6 +15,7 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
     - ./vendor/it-projects-llc/misc-addons:/mnt/addons/misc-addons
+    - ./vendor/OCA/product-attribute:/mnt/addons/product-attribute
 
   environment:
     - WDB_SOCKET_SERVER=wdb
@@ -23,21 +24,13 @@ x-default:
 services:
   odoo:
     << : *default-odoo
-    command: ['--dev', 'wdb,reload,qweb,werkzeug,xml', '-d', 'web_image_cache',
-    '-i', 'ir_attachment_url',
+    command: ['--dev', 'wdb,reload,qweb,werkzeug,xml',
+    '-d', 'product_template_tags_test',
+    '-i', 'product_template_tags',
 #    '--test-enable', '--stop-after-init',
-   '--log-handler=odoo.addons.web_image_cache:DEBUG',
-   '--log-handler=odoo.addons.ir_attachment_url:DEBUG',
-   '--log-handler=odoo.addons.ir_attachment_s3:DEBUG',
+   '--log-handler=odoo.addons.product_template_tags:DEBUG',
     ]
-#'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
-#'--log-handler=odoo.modules.module:DEBUG',
-#'--log-handler=odoo.models:DEBUG',
-#'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
-#'--log-handler=odoo.modules.registry:DEBUG',
-#'--log-handler=odoo.fields:DEBUG',
-#'--log-handler=odoo.modules.loading:DEBUG',
-#'--log-handler=odoo.addons.queue_job:DEBUG',
+
   db:
     image: postgres:10
     environment:
