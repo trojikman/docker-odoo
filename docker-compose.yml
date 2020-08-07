@@ -7,9 +7,13 @@ x-default:
   depends_on:
     - db
     - wdb
+#    - nginx
   ports:
     - "8069:8069"
     - "8072:8072"
+#  expose:
+#    - "8069"
+#    - "8072"
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
@@ -21,25 +25,11 @@ x-default:
     - WDB_NO_BROWSER_AUTO_OPEN=True
 
 services:
-  dev:
-    <<: *default-odoo
-    command: ['-d', 'openapi', '--init', 'openapi', '--db-filter=.*', '--test-enable']
-
-  web:
+  odoo:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'openapi', '--init', 'openapi',  '--db-filter=.*', '--workers=3', '--load=openapi,base,web',
-    ]
-    #'--init', 'openapi',
-#'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
-#'--log-handler=odoo.modules.module:DEBUG',
-#'--log-handler=odoo.models:DEBUG',
-#'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
-#'--log-handler=odoo.modules.registry:DEBUG',
-#'--log-handler=odoo.fields:DEBUG',
-#'--log-handler=odoo.modules.loading:DEBUG',
-#'--log-handler=odoo.addons.queue_job:DEBUG',
+    command: ['-d', 'openapi', '--init', 'openapi',  '--db-filter=.*', '--workers=3', '--load=openapi,base,web',]
   db:
     image: postgres:10
     environment:
@@ -52,6 +42,11 @@ services:
   wdb:
     image: kozea/wdb:3.3.0
     ports: ['1984:1984']
+#  nginx:
+#    image: nginx
+#    volumes:
+#      - ./nginx/conf.d:/etc/nginx/conf.d
+#    ports: ["80:80"]
 
 volumes:
   odoo-web-data:
