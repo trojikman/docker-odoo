@@ -30,7 +30,7 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'mail', '--init', 'ir_attachment_s3', '--db-filter=.*', '--workers=3']
+    command: ['-d', 's3', '--init', 'ir_attachment_s3', '--db-filter=.*', '--workers=3']
     env_file:
       - ../aws/aws-credentials.env
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
