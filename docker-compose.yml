@@ -7,13 +7,9 @@ x-default:
   depends_on:
     - db
     - wdb
-#    - nginx
   ports:
     - "8069:8069"
     - "8072:8072"
-#  expose:
-#    - "8069"
-#    - "8072"
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
@@ -32,6 +28,8 @@ services:
     command: ['-d', 'openapi', '--init', 'openapi',  '--db-filter=.*', '--workers=3', '--load=openapi,base,web',]
   db:
     image: postgres:10
+    logging:
+      driver: none
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
@@ -42,11 +40,15 @@ services:
   wdb:
     image: kozea/wdb:3.3.0
     ports: ['1984:1984']
-#  nginx:
-#    image: nginx
-#    volumes:
-#      - ./nginx/conf.d:/etc/nginx/conf.d
-#    ports: ["80:80"]
+  nginx:
+    image: nginx
+    logging:
+      driver: none
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports: ["80:80"]
+    depends_on:
+      - odoo
 
 volumes:
   odoo-web-data:

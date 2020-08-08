@@ -1,1 +1,0 @@
-docker run --name test-nginx -v /home/trojik/projects/docker-odoo-13/nginx/conf.d:/etc/nginx/conf.d -p 80:80 nginx
