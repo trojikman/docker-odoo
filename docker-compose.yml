@@ -13,7 +13,10 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
+#    - ../pos-addons-publish:/mnt/addons/pos-addons
     - ../pos-addons:/mnt/addons/pos-addons
+#    - ../enterprise/12.0:/mnt/addons/ee-addons
+#    - ../ee-addons-store:/mnt/addons/ee-dep-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
@@ -27,13 +30,13 @@ x-default:
 services:
   dev:
     <<: *default-odoo
-    command: ['--db-filter=.*']
+    command: ['-d', 'pos', '--init', 'pos_order_print_check', '--db-filter=.*', '--workers=0', '--test-enable']
 
   web:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'pos', '--init', 'pos_multi_session', '--db-filter=.*', '--workers=0', '--test-enable']
+    command: ['-d', 'pos', '--init', 'pos_product_available', '--db-filter=.*', '--workers=2']
 #'--log-handler=odoo.models:DEBUG',
 #'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
 #'--log-handler=odoo.modules.registry:DEBUG',
