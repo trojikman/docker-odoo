@@ -14,37 +14,27 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
 #    - ../pos-addons-publish:/mnt/addons/pos-addons
-    - ../pos-addons:/mnt/addons/pos-addons
+    - ../vendor/pos-addons:/mnt/addons/pos-addons
 #    - ../enterprise/12.0:/mnt/addons/ee-addons
 #    - ../ee-addons-store:/mnt/addons/ee-dep-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
 #    - ../odoo12/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
-
   environment:
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
-#    - ODOO_QUEUE_JOB_HOST=saas.127.0.0.1.nip.io
 
 services:
-  dev:
-    <<: *default-odoo
-    command: ['-d', 'pos', '--init', 'pos_order_print_check', '--db-filter=.*', '--workers=0', '--test-enable']
-
-  web:
+  odoo:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'pos', '--init', 'pos_product_available', '--db-filter=.*', '--workers=2']
-#'--log-handler=odoo.models:DEBUG',
-#'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
-#'--log-handler=odoo.modules.registry:DEBUG',
-#'--log-handler=odoo.fields:DEBUG',
-#'--log-handler=odoo.modules.loading:DEBUG',
-#'--log-handler=odoo.addons.queue_job:DEBUG',
+    command: ['-d', 'openapi', '--init', 'openapi',  '--db-filter=.*', '--workers=3', '--load=openapi,base,web',]
   db:
     image: postgres:10
+    logging:
+      driver: none
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
@@ -55,6 +45,15 @@ services:
   wdb:
     image: kozea/wdb:3.3.0
     ports: ['1984:1984']
+  nginx:
+    image: nginx
+    logging:
+      driver: none
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports: ["80:80"]
+    depends_on:
+      - odoo
 
 volumes:
   odoo-web-data:

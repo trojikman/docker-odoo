@@ -4,13 +4,18 @@ USER root
 
 # Python Dependencies
 # TODO: сделать автоматическую установку зависимостей из файлов requirenments
+# for ir_attachment_s3
+#RUN pip3 install boto3
 RUN pip3 install python-slugify
 # for tests
 RUN pip3 install websocket-client
 # WDB
 RUN pip3 install wdb
 
-#RUN mkdir -p /mnt/extra-addons && chown -R odoo /mnt/extra-addons
+# openapi dependencies
+RUN pip3 install bravado
+RUN pip3 install swagger-spec-validator==2.4.3
+
 RUN apt-get update  \
         && apt-get install -y git \
         && apt-get install -y wget \
