@@ -26,7 +26,7 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'misc', '--db-filter=.*', '--init', 'ir_attachment_url', '--workers=0',] # '--init', 'web_theme_kit', web_widget_color
+    command: ['-d', 'misc', '--db-filter=.*', '--init', 'web', '--workers=0',] # '--init', 'web_theme_kit', web_widget_color
 # Для отладки можно использовать такое:  '--log-handler=odoo.models:DEBUG',  
   db:
     image: postgres:10

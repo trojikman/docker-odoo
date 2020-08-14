@@ -64,13 +64,12 @@ RUN mkdir -p /mnt/addons \
 #RUN git clone --depth=1 -b 12.0 https://github.com/itpp-labs/pos-addons.git /mnt/addons/pos-addons && chown -R odoo /mnt/addons/pos-addons
 RUN git clone --depth=1 -b 12.0 https://github.com/itpp-labs/misc-addons.git /mnt/addons/misc-addons && chown -R odoo /mnt/addons/misc-addons
 #RUN git clone --depth=1 -b 12.0 https://github.com/itpp-labs/mail-addons.git /mnt/addons/mail-addons && chown -R odoo /mnt/addons/mail-addons
-RUN git clone --depth=1 -b 12.0 https://github.com/itpp-labs/website-addons.git /mnt/addons/website-addons && chown -R odoo /mnt/addons/website-addons
+#RUN git clone --depth=1 -b 12.0 https://github.com/itpp-labs/website-addons.git /mnt/addons/website-addons && chown -R odoo /mnt/addons/website-addons
 
 
 
 # OCA repos
 #RUN git clone --depth=1 -b 12.0 https://github.com/OCA/queue.git /mnt/addons/queue && chown odoo /mnt/addons/queue
 #RUN git clone --depth=1 -b 12.0 https://github.com/OCA/web.git /mnt/addons/web && chown odoo /mnt/addons/web
-#>>>>>>> 12.0
 
 USER odoo
