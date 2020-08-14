@@ -13,28 +13,25 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../misc-addons:/mnt/addons/misc-addons
+#    - ../vendor/misc-addons:/mnt/addons/misc-addons
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
 #    - ../odoo12/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
-
   environment:
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
 
 services:
-  dev:
-    <<: *default-odoo
-    command: ['-d', 'test', '--init', 'project_task_subtask', '--db-filter=.*', '--test-enable']
-
-  web:
+  odoo:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'misc', '--db-filter=.*', '--init', 'web_debranding', '--workers=0',] # '--init', 'web_theme_kit', web_widget_color
+    command: ['-d', 'misc', '--db-filter=.*', '--init', 'ir_attachment_url', '--workers=0',] # '--init', 'web_theme_kit', web_widget_color
 # Для отладки можно использовать такое:  '--log-handler=odoo.models:DEBUG',  
   db:
     image: postgres:10
+    logging:
+      driver: none
     environment:
       - POSTGRES_DB=postgres
       - POSTGRES_PASSWORD=odoo
@@ -45,6 +42,15 @@ services:
   wdb:
     image: kozea/wdb:3.3.0
     ports: ['1984:1984']
+  nginx:
+    image: nginx
+    logging:
+      driver: none
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports: ["80:80"]
+    depends_on:
+      - odoo
 
 volumes:
   odoo-web-data:
