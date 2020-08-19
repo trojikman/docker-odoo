@@ -14,6 +14,8 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
     - ../vendor/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/misc-addons:/mnt/addons/misc-addons
+
   #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
@@ -25,7 +27,7 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'openapi', '--init', 'openapi',  '--db-filter=.*', '--workers=3', '--load=openapi,base,web',]
+    command: ['-d', 'misc', '--init', 'contacts,point_of_sale,l10n_be,base_attendance',  '--db-filter=.*', '--workers=3', '--without-demo=all'] # '--load=openapi,base,web', base_attendance
   db:
     image: postgres:10
     logging:

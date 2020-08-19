@@ -51,19 +51,11 @@ RUN apt-get update  \
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome-stable_current_amd64.deb
 
-# IT-Projects repos
+# addons path
 RUN mkdir -p /mnt/addons \
         && chown -R odoo /mnt/addons
 
-# TODO: оптимизировать эти команды (клонирование из файла или подстановка)
+# TODO: решил что можно обойтись и без клонирования репозитория в докерфайле, лучше по мере надобности корректировать addons-path в конфиге и прокидывать нужную папку с модулями.
 # RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/access-addons.git /mnt/addons/access-addons && chown -R odoo /mnt/addons/access-addons
-# RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/pos-addons.git /mnt/addons/pos-addons && chown odoo /mnt/addons/pos-addons
-# RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/misc-addons.git /mnt/addons/misc-addons && chown odoo /mnt/addons/misc-addons
-RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/sync-addons.git /mnt/addons/sync-addons && chown odoo /mnt/addons/sync-addons
-
-
-# OCA repos
-# RUN git clone --depth=1 -b 13.0 https://github.com/OCA/queue.git /mnt/addons/queue && chown odoo /mnt/addons/queue
-# RUN git clone --depth=1 -b 13.0 https://github.com/OCA/web.git /mnt/addons/web && chown odoo /mnt/addons/web
 
 USER odoo
