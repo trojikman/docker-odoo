@@ -33,13 +33,6 @@ services:
     env_file:
       - ../aws/aws-credentials.env
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
-#'--log-handler=odoo.modules.module:DEBUG',
-#'--log-handler=odoo.models:DEBUG',
-#'--log-handler=odoo.addons.base.models.ir_cron:DEBUG',
-#'--log-handler=odoo.modules.registry:DEBUG',
-#'--log-handler=odoo.fields:DEBUG',
-#'--log-handler=odoo.modules.loading:DEBUG',
-#'--log-handler=odoo.addons.queue_job:DEBUG',
   db:
     image: postgres:10
     logging:

@@ -57,11 +57,11 @@ RUN mkdir -p /mnt/addons \
         && chown -R odoo /mnt/addons
 
 # TODO: оптимизировать эти команды (клонирование из файла или подстановка)
-RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/access-addons.git /mnt/addons/access-addons && chown -R odoo /mnt/addons/access-addons
+#RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/access-addons.git /mnt/addons/access-addons && chown -R odoo /mnt/addons/access-addons
 #RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/pos-addons.git /mnt/addons/pos-addons && chown odoo /mnt/addons/pos-addons
-RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/misc-addons.git /mnt/addons/misc-addons && chown odoo /mnt/addons/misc-addons
+#RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/misc-addons.git /mnt/addons/misc-addons && chown odoo /mnt/addons/misc-addons
 #RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/mail-addons.git /mnt/addons/mail-addons && chown odoo /mnt/addons/mail-addons
-RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/sync-addons.git /mnt/addons/sync-addons && chown odoo /mnt/addons/sync-addons
+#RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/sync-addons.git /mnt/addons/sync-addons && chown odoo /mnt/addons/sync-addons
 
 
 # OCA repos
