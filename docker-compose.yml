@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 x-default:
   &default-odoo
@@ -47,6 +47,7 @@ services:
   wdb:
     image: kozea/wdb:3.3.0
     ports: ['1984:1984']
+    init: true
   nginx:
     image: nginx
     logging:
