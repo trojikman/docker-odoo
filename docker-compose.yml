@@ -1,4 +1,4 @@
-version: '3.4'
+version: '3.7'
 
 x-default:
   &default-odoo
@@ -19,7 +19,6 @@ x-default:
 #    - ../odoo12/odoo/odoo/addons/base:/usr/lib/python3/dist-packages/odoo/addons/base
 #    - ../odoo12/odoo/odoo/modules:/usr/lib/python3/dist-packages/odoo/modules
 #    - ../odoo12/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
-
   environment:
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
@@ -44,6 +43,7 @@ services:
   wdb:
     image: kozea/wdb:3.3.0
     ports: ['1984:1984']
+    init: true
   nginx:
     image: nginx
     logging:
