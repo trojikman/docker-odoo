@@ -16,6 +16,11 @@ RUN pip3 install wdb
 RUN pip3 install bravado
 RUN pip3 install swagger-spec-validator==2.4.3
 
+# sync demo dependencies
+RUN pip3 install python-telegram-bot
+RUN pip3 install PyGithub
+RUN pip3 install py-trello
+
 RUN apt-get update  \
         && apt-get install -y git \
         && apt-get install -y wget \
