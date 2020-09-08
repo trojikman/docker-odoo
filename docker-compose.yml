@@ -13,15 +13,11 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../vendor/pos-addons:/mnt/addons/pos-addons
-    # - ../vendor/sync-addons:/mnt/addons/sync-addons
-    # - ../vendor/mail-addons:/mnt/addons/mail-addons
-    - ../vendor/access-addons:/mnt/addons/access-addons
-    - ../vendor/website-addons:/mnt/addons/website-addons
-    - ../vendor/enterprise/12.0:/mnt/addons/enterprise
-    - ../vendor/misc-addons-store:/mnt/addons/misc-addons
-    # - ../vendor/web:/mnt/addons/web
-    - ../vendor/odoo_vik_main:/mnt/addons/odoo_vik_main
+#    - ../vendor/pos-addons:/mnt/addons/pos-addons
+#    - ../vendor/misc-addons:/mnt/addons/misc-addons
+    - ../vendor/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/queue:/mnt/addons/queue
+  #    - ../enterprise/12.0:/mnt/addons/ee-addons
 #    - ../ee-addons-store:/mnt/addons/ee-dep-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
     # - ../odoo/addons/hw_proxy:/usr/lib/python3/dist-packages/odoo/addons/hw_proxy/
@@ -37,15 +33,9 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'pos',
-              '--init', 'pos_debt_notebook_sync', # pos_receipt_custom_template
-              '--db-filter=.*',
-              '--workers=2',
-              # '--xmlrpc-port=8888',
-              # '--without-demo=all',
-              # '--test-enable',
-              # '--load=web,ir_attachment_url',
-    ] # '--load=openapi,base,web', pos_product_available_negative
+#    command: ['-d', 'pos', '--init', 'ir_attachment_url',  '--db-filter=.*', '--workers=3', '--load=web,ir_attachment_url'] # '--load=openapi,base,web', pos_product_available_negative
+    command: ['-d', 'pos', '--init', 'sync',  '--db-filter=.*', '--workers=3', '--load=base,web,queue_job',] # '--load=openapi,base,web', pos_product_available_negative
+
   db:
     image: postgres:10
     logging:
