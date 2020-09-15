@@ -33,9 +33,18 @@ RUN apt-get update \
 # WDB
 RUN pip3 install wdb
 
-RUN pip3 install wechatpy[cryptography]
-RUN pip3 install alipay
-RUN pip3 install requests-mock
+#RUN pip3 install wechatpy[cryptography]
+#RUN pip3 install alipay
+#RUN pip3 install requests-mock
+
+# sync dependencies
+# queue_job
+RUN pip3 install requests
+
+# sync demo dependencies
+RUN pip3 install python-telegram-bot
+RUN pip3 install PyGithub
+RUN pip3 install py-trello
 
 # IT-Projects repos
 RUN mkdir -p /mnt/addons \
