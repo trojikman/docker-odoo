@@ -34,7 +34,7 @@ services:
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
 #    command: ['-d', 'pos', '--init', 'ir_attachment_url',  '--db-filter=.*', '--workers=3', '--load=web,ir_attachment_url'] # '--load=openapi,base,web', pos_product_available_negative
-    command: ['-d', 'pos', '--init', 'sync',  '--db-filter=.*', '--workers=3', '--load=base,web,queue_job',] # '--load=openapi,base,web', pos_product_available_negative
+    command: ['-d', 'pos', '--init', 'sync,contacts',  '--db-filter=.*', '--workers=3', '--load=base,web,queue_job',] # '--load=openapi,base,web', pos_product_available_negative
 
   db:
     image: postgres:10
