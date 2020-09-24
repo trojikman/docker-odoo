@@ -43,7 +43,8 @@ RUN apt-get update  \
         && apt-get install -y xdg-utils \
         && apt-get install -y libxfixes3 \
         && apt-get install -y libasound2 \
-        && apt-get install -y fonts-liberation
+        && apt-get install -y fonts-liberation \
+        && apt-get install -y htop
 
 
 

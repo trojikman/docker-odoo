@@ -17,6 +17,9 @@ x-default:
   #  - ../odoo13/odoo/odoo/fields.py:/usr/lib/python3/dist-packages/odoo/fields.py
 
   environment:
+#    - HOST=odoo
+#    - USER=odoo
+#    - PASSWORD=odoo
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
 
