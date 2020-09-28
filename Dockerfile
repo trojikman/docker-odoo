@@ -46,21 +46,27 @@ RUN apt-get update  \
         && apt-get install -y fonts-liberation \
         && apt-get install -y htop
 
-
-
 # Install Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome-stable_current_amd64.deb
+
+# sync dependencies
+# queue_job
+RUN pip3 install requests
+
+# sync demo dependencies
+RUN pip3 install python-telegram-bot
+RUN pip3 install PyGithub
+RUN pip3 install py-trello
 
 # IT-Projects repos
 RUN mkdir -p /mnt/addons \
         && chown -R odoo /mnt/addons
 
-# TODO: оптимизировать эти команды (клонирование из файла или подстановка)
 # RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/access-addons.git /mnt/addons/access-addons && chown -R odoo /mnt/addons/access-addons
 # RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/pos-addons.git /mnt/addons/pos-addons && chown odoo /mnt/addons/pos-addons
 # RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/misc-addons.git /mnt/addons/misc-addons && chown odoo /mnt/addons/misc-addons
-RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/sync-addons.git /mnt/addons/sync-addons && chown odoo /mnt/addons/sync-addons
+#RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/sync-addons.git /mnt/addons/sync-addons && chown odoo /mnt/addons/sync-addons
 
 
 # OCA repos
