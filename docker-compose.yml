@@ -25,6 +25,7 @@ services:
       - wdb
       - proxy
       - odoo-longpolling
+      - smtpfake
     command: ['--dev', 'wdb,reload,qweb,werkzeug,xml',
     '-d', 'product_pack_example',
     '-i', 'sale_product_pack',
@@ -60,6 +61,9 @@ services:
 
   wdb:
     image: kozea/wdb:3.3.0
+
+  smtpfake:
+    image: mailhog/mailhog
 
 volumes:
   odoo-web-data:
