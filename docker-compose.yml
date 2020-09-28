@@ -4,13 +4,6 @@ x-default:
   &default-odoo
   tty: true
   build: .
-  depends_on:
-    - db
-    - wdb
-    - proxy
-  ports:
-    - "8069:8069"
-    - "8072:8072"
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./vendor/odoo/odoo:/usr/lib/python3/dist-packages/odoo
@@ -27,6 +20,11 @@ x-default:
 services:
   odoo:
     << : *default-odoo
+    depends_on:
+      - db
+      - wdb
+      - proxy
+      - odoo-longpolling
     command: ['--dev', 'wdb,reload,qweb,werkzeug,xml',
     '-d', 'product_pack_example',
     '-i', 'sale_product_pack',
@@ -34,6 +32,14 @@ services:
    '--log-handler=odoo.addons.product_pack:DEBUG',
    '--log-handler=odoo.addons.sale_product_pack:DEBUG',
     ]
+
+  odoo-longpolling:
+    << : *default-odoo
+    depends_on:
+      - db
+      - wdb
+      - proxy
+    command: ['odoo', 'gevent', '--dev', 'wdb,reload,qweb,werkzeug,xml']
 
   db:
     image: postgres:10
@@ -49,11 +55,11 @@ services:
 
   proxy:
     image: envoyproxy/envoy-alpine:v1.10.0
-    ports: ['81:80', '80:80', '9901:9901']
+    ports: ['80:80', '9901:9901']
     volumes: ['./envoy.yaml:/etc/envoy/envoy.yaml']
+
   wdb:
     image: kozea/wdb:3.3.0
-    ports: ['1984:1984']
 
 volumes:
   odoo-web-data:
