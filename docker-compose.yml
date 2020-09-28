@@ -13,6 +13,8 @@ x-default:
     - "8072:8072"
   volumes:
     - odoo-web-data:/var/lib/odoo
+    - ./vendor/odoo/odoo:/usr/lib/python3/dist-packages/odoo
+    - ./vendor/odoo/addons:/var/lib/odoo/addons/13.0
     - ./config:/etc/odoo
     - ./vendor/it-projects-llc/misc-addons:/mnt/addons/misc-addons
     - ./vendor/OCA/product-attribute:/mnt/addons/product-attribute
