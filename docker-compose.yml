@@ -30,7 +30,13 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'pos', '--init', 'pos_invoice_pay,l10n_be',  '--db-filter=.*', '--workers=3',] # '--load=openapi,base,web', pos_product_available_negative
+    command: ['-d', 'pos',
+              '--init', 'pos_scan_ref',
+              '--db-filter=.*',
+              '--workers=0',
+              '--test-enable',
+    ]
+    #'--load=openapi,base,web', pos_product_available_negative
   db:
     image: postgres:10
     logging:
