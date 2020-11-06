@@ -1,5 +1,4 @@
-curl -X GET "http://sync.127.0.0.1.nip.io/api/v1/demo/res.partner/1" -H "accept: application/json" -H "authorization: Basic c3luYzo1NDcwOTI4Yi1kMjNkLTQyNmItYWJmNS0yMTE3ODY2MzgzOGM="
-
+curl -X GET "https://trojik.tech/api/v1/demo/res.partner/1" -H "accept: application/json" -H "authorization: Basic  "
 curl -X PATCH "http://sync.127.0.0.1.nip.io/api/v1/demo/res.partner/call/search" -H "accept: application/json" -H "authorization: Basic c3luYzo1NDcwOTI4Yi1kMjNkLTQyNmItYWJmNS0yMTE3ODY2MzgzOGM=" -H "Content-Type: application/json" -d "{ \"kwargs\": {\"body\": \"Message is posted via API by calling message_post method\" }, \"args\": []}"
 
 
