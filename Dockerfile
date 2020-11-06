@@ -5,7 +5,7 @@ USER root
 # Python Dependencies
 # TODO: сделать автоматическую установку зависимостей из файлов requirenments
 # for ir_attachment_s3
-#RUN pip3 install boto3
+RUN pip3 install boto3
 RUN pip3 install python-slugify
 # for tests
 RUN pip3 install websocket-client
@@ -58,6 +58,10 @@ RUN pip3 install requests
 RUN pip3 install python-telegram-bot
 RUN pip3 install PyGithub
 RUN pip3 install py-trello
+
+#odoo_backup_sh_google_disk dependencies
+RUN pip3 install google-api-python-client
+RUN pip3 install pretty_bad_protocol
 
 # IT-Projects repos
 RUN mkdir -p /mnt/addons \

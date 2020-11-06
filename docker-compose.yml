@@ -15,6 +15,7 @@ x-default:
     - ./config:/etc/odoo
     - ../vendor/queue:/mnt/addons/queue
     - ../vendor/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/misc-addons:/mnt/addons/misc-addons
   environment:
 #    - HOST=odoo
 #    - USER=odoo
@@ -26,11 +27,11 @@ services:
   odoo:
     << : *default-odoo
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'openapi',
-              '--init', 'openapi',
+    command: ['-d', 'auto',
+              '--init', 'odoo_backup_sh_google_disk',
               '--db-filter=.*',
               '--workers=2',
-              '--load=openapi,base,web',
+#              '--load=openapi,base,web',
 #              '--test-enable',
 #              '--load=web,queue_job',
     ]
