@@ -14,7 +14,7 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
 #    - ../pos-addons-publish:/mnt/addons/pos-addons
-    - ../vendor/pos-addons:/mnt/addons/pos-addons
+    - ../vendor/misc-addons:/mnt/addons/misc-addons
 #    - ../enterprise/12.0:/mnt/addons/ee-addons
 #    - ../ee-addons-store:/mnt/addons/ee-dep-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
@@ -31,10 +31,10 @@ services:
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
     command: ['-d', 'pos',
-              '--init', 'pos_scan_ref',
+              '--init', 'project_task_subtask',
               '--db-filter=.*',
-              '--workers=0',
-              '--test-enable',
+              '--workers=2',
+#              '--test-enable',
     ]
     #'--load=openapi,base,web', pos_product_available_negative
   db:
