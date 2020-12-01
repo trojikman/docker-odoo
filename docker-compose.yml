@@ -9,6 +9,7 @@ x-default:
     - ./vendor/odoo/odoo:/usr/lib/python3/dist-packages/odoo
     - ./vendor/odoo/addons:/var/lib/odoo/addons/13.0
     - ./config:/etc/odoo
+    - ./vendor/it-projects-llc/access-addons:/mnt/addons/access-addons
     - ./vendor/it-projects-llc/misc-addons:/mnt/addons/misc-addons
     - ./vendor/OCA/product-attribute:/mnt/addons/product-attribute
     - ./vendor/OCA/product-pack:/mnt/addons/product-pack
