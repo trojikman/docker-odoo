@@ -26,6 +26,9 @@ x-default:
 #    - PASSWORD=odoo
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
+#    - HOST=db
+#    - USER=odoo
+#    - PASSWORD=odoo
 
 services:
   odoo:
@@ -40,7 +43,9 @@ services:
 #              '--test-enable',
 #              '--load=web,queue_job',
     ]
-    # '--test-enable' '--load=openapi,base,web', '--without-demo=all' --load base,web,queue_job
+    env_file:
+      - ../aws/aws-credentials.env
+#'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
   db:
     image: postgres:10
     logging:
