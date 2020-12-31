@@ -44,13 +44,25 @@ RUN apt-get update  \
         && apt-get install -y xdg-utils \
         && apt-get install -y libxfixes3 \
         && apt-get install -y libasound2 \
-        && apt-get install -y fonts-liberation
-
-
+        && apt-get install -y fonts-liberation \
+        && apt-get install -y htop
 
 # Install Chrome
 RUN wget https://dl.google.com/linux/direct/google-chrome-stable_current_amd64.deb
 RUN dpkg -i google-chrome-stable_current_amd64.deb
+
+# sync dependencies
+# queue_job
+RUN pip3 install requests
+
+# sync demo dependencies
+RUN pip3 install python-telegram-bot
+RUN pip3 install PyGithub
+RUN pip3 install py-trello
+
+#odoo_backup_sh_google_disk dependencies
+RUN pip3 install google-api-python-client
+RUN pip3 install pretty_bad_protocol
 
 # IT-Projects repos
 RUN mkdir -p /mnt/addons \
@@ -58,7 +70,6 @@ RUN mkdir -p /mnt/addons \
 
 # TODO: оптимизировать эти команды (клонирование из файла или подстановка)
 #RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/access-addons.git /mnt/addons/access-addons && chown -R odoo /mnt/addons/access-addons
-#RUN git clone --depth=1 -b 13.0 https://github.com/it-projects-llc/pos-addons.git /mnt/addons/pos-addons && chown odoo /mnt/addons/pos-addons
 #RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/misc-addons.git /mnt/addons/misc-addons && chown odoo /mnt/addons/misc-addons
 #RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/mail-addons.git /mnt/addons/mail-addons && chown odoo /mnt/addons/mail-addons
 #RUN git clone --depth=1 -b 13.0 https://github.com/itpp-labs/sync-addons.git /mnt/addons/sync-addons && chown odoo /mnt/addons/sync-addons
@@ -67,5 +78,7 @@ RUN mkdir -p /mnt/addons \
 # OCA repos
 #RUN git clone --depth=1 -b 13.0 https://github.com/OCA/queue.git /mnt/addons/queue && chown odoo /mnt/addons/queue
 #RUN git clone --depth=1 -b 13.0 https://github.com/OCA/web.git /mnt/addons/web && chown odoo /mnt/addons/web
+# RUN git clone --depth=1 -b 13.0 https://github.com/OCA/queue.git /mnt/addons/queue && chown odoo /mnt/addons/queue
+# RUN git clone --depth=1 -b 13.0 https://github.com/OCA/web.git /mnt/addons/web && chown odoo /mnt/addons/web
 
 USER odoo
