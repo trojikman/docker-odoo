@@ -15,7 +15,11 @@ x-default:
     - ./config:/etc/odoo
     - ../vendor/queue:/mnt/addons/queue
     - ../vendor/sync-addons:/mnt/addons/sync-addons
-    - ../vendor/misc-addons:/mnt/addons/misc-addons
+    - ../vendor/misc-addons-store:/mnt/addons/misc-addons
+    - ../vendor/access-addons-store:/mnt/addons/access-addons
+    - ../vendor/mail-addons-store:/mnt/addons/mail-addons
+    - ../vendor/website-addons:/mnt/addons/website-addons
+
   environment:
 #    - HOST=odoo
 #    - USER=odoo
@@ -27,10 +31,11 @@ services:
   odoo:
     << : *default-odoo
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'auto',
-              '--init', 'odoo_backup_sh_google_disk',
+    command: ['-d', 'access',
+              '--init', 'access_restricted',
               '--db-filter=.*',
               '--workers=2',
+#              '--without-demo=all'
 #              '--load=openapi,base,web',
 #              '--test-enable',
 #              '--load=web,queue_job',
