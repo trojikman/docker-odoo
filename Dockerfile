@@ -1,4 +1,4 @@
-FROM odoo:13.0
+FROM odoo:14.0
 
 USER root
 
@@ -62,6 +62,8 @@ RUN pip3 install py-trello
 #odoo_backup_sh_google_disk dependencies
 RUN pip3 install google-api-python-client
 RUN pip3 install pretty_bad_protocol
+RUN pip3 install requests_mock
+
 
 # IT-Projects repos
 RUN mkdir -p /mnt/addons \
