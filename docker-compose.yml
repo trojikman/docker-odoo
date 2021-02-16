@@ -17,11 +17,11 @@ x-default:
     # - ../vendor/sync-addons:/mnt/addons/sync-addons
     # - ../vendor/mail-addons:/mnt/addons/mail-addons
     - ../vendor/access-addons:/mnt/addons/access-addons
-    - ../vendor/website-addons:/mnt/addons/website-addons
-    - ../vendor/enterprise/12.0:/mnt/addons/enterprise
-    - ../vendor/misc-addons-store:/mnt/addons/misc-addons
+#    - ../vendor/website-addons:/mnt/addons/website-addons
+ #   - ../vendor/enterprise/12.0:/mnt/addons/enterprise
+    - ../vendor/misc-addons:/mnt/addons/misc-addons
     # - ../vendor/web:/mnt/addons/web
-    - ../vendor/odoo_vik_main:/mnt/addons/odoo_vik_main
+   # - ../vendor/odoo_vik_main:/mnt/addons/odoo_vik_main
 #    - ../ee-addons-store:/mnt/addons/ee-dep-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
     # - ../odoo/addons/hw_proxy:/usr/lib/python3/dist-packages/odoo/addons/hw_proxy/
