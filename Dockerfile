@@ -56,9 +56,12 @@ RUN dpkg -i google-chrome-stable_current_amd64.deb
 RUN pip3 install requests
 
 # sync demo dependencies
-RUN pip3 install python-telegram-bot
-RUN pip3 install PyGithub
-RUN pip3 install py-trello
+# RUN pip3 install python-telegram-bot
+# RUN pip3 install PyGithub
+# RUN pip3 install py-trello
+RUN python3 -m pip install PyGithub py-trello
+
+# python-telegram-bot
 
 #odoo_backup_sh_google_disk dependencies
 RUN pip3 install google-api-python-client
