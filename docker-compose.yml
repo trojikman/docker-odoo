@@ -13,13 +13,15 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../vendor/14.0/queue:/mnt/addons/queue
-    - ../vendor/14.0/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/queue:/mnt/addons/queue
     - ../vendor/misc-addons:/mnt/addons/misc-addons
-    - ../vendor/access-addons-store:/mnt/addons/access-addons
+    - ../vendor/access-addons:/mnt/addons/access-addons
     - ../vendor/website-addons:/mnt/addons/website-addons 
-    - ../vendor/pos-addons-store:/mnt/addons/pos-addons 
-    - ../vendor/enterprise/14.0:/mnt/addons/enterprise
+    - ../vendor/pos-addons:/mnt/addons/pos-addons 
+    - ../vendor/enterprise/14.0:/mnt/addons/enterprise bikeparts
+    - ../vendor/bikeparts:/mnt/addons/bikeparts
+
 
   environment:
 #    - HOST=odoo
@@ -27,7 +29,6 @@ x-default:
 #    - PASSWORD=odoo
     - WDB_SOCKET_SERVER=wdb
     - WDB_NO_BROWSER_AUTO_OPEN=True
-    - CRYPTOGRAPHY_DONT_BUILD_RUST=1
 #    - HOST=db
 #    - USER=odoo
 #    - PASSWORD=odoo
@@ -37,11 +38,11 @@ services:
     << : *default-odoo
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
     command: ['-d', 'sync',
-              '--init', 'sync', # ir_attachment_s3 web_login_background
+              '--init', 'sync_twindis', # sync_twindis access_apps,sale_management,stock, access_restricted
               '--db-filter=.*',
               '--workers=2',
               # '--without-demo=all'
-#              '--load=openapi,base,web',
+             '--load=base,web,queue_job',
               # '--test-enable',
             #  '--load=web,ir_attachment_url',
     ]
