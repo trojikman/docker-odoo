@@ -18,7 +18,7 @@ x-default:
     - ../vendor/misc-addons-store:/mnt/addons/misc-addons
     - ../vendor/access-addons:/mnt/addons/access-addons
     - ../vendor/mail-addons-store:/mnt/addons/mail-addons
-    - ../vendor/website-addons:/mnt/addons/website-addons
+    - ../vendor/pos-addons:/mnt/addons/pos-addons
     - ../vendor/enterprise/13.0:/mnt/addons/enterprise
 
     # - ../odoo/odoo/addons/base/models/assetsbundle.py:/usr/lib/python3/dist-packages/odoo/addons/base/models/assetsbundle.py
@@ -37,8 +37,8 @@ services:
   odoo:
     << : *default-odoo
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'web',
-              '--init', 'web_theme_kit',
+    command: ['-d', 'pos',
+              '--init', 'pos_orderline_absolute_discount',
               '--db-filter=.*',
               '--workers=2',
               # '--without-demo=all'
