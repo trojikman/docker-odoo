@@ -13,15 +13,15 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../vendor/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/sync-addons-store:/mnt/addons/sync-addons
     - ../vendor/queue:/mnt/addons/queue
     - ../vendor/misc-addons:/mnt/addons/misc-addons
     - ../vendor/access-addons:/mnt/addons/access-addons
-    - ../vendor/website-addons:/mnt/addons/website-addons 
-    - ../vendor/pos-addons:/mnt/addons/pos-addons 
-    - ../vendor/enterprise/14.0:/mnt/addons/enterprise bikeparts
-    - ../vendor/bikeparts:/mnt/addons/bikeparts
-
+    - ../vendor/website-addons-store:/mnt/addons/website-addons 
+    - ../vendor/pos-addons-store:/mnt/addons/pos-addons 
+    - ../vendor/enterprise/14.0:/mnt/addons/enterprise
+    # - ../vendor/bikeparts:/mnt/addons/bikeparts
+    - ../odoo/addons/website:/usr/lib/python3/dist-packages/odoo/addons/website
 
   environment:
 #    - HOST=odoo
@@ -37,17 +37,17 @@ services:
   odoo:
     << : *default-odoo
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'sync',
-              '--init', 'sync_twindis', # sync_twindis access_apps,sale_management,stock, access_restricted
+    command: ['-d', 's3',
+              '--init', 'ir_attachment_s3', # website website_debranding sync_twindis access_apps,sale_management,stock, access_restricted
               '--db-filter=.*',
               '--workers=2',
               # '--without-demo=all'
-             '--load=base,web,queue_job',
+            #  '--load=base,web,queue_job',
               # '--test-enable',
-            #  '--load=web,ir_attachment_url',
     ]
     env_file:
-      - ../aws/aws-credentials.env
+      # - ../aws/aws-credentials.env
+      - ./minio/local-test-credentials.env
 #'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
   db:
     image: postgres:10
@@ -73,7 +73,19 @@ services:
     ports: ["80:80"]
     depends_on:
       - odoo
+  minio:
+    image: minio/minio
+    # networks:
+    ports: ["9000:9000"]
+    environment: 
+      MINIO_ACCESS_KEY: "admin"
+      MINIO_SECRET_KEY: "password"
+    command: 
+      server /data
+    volumes:
+      - s3:/data:z
 
 volumes:
   odoo-web-data:
   odoo-db-data:
+  s3:
