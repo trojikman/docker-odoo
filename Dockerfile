@@ -4,8 +4,10 @@ USER root
 
 # Python Dependencies
 # TODO: сделать автоматическую установку зависимостей из файлов requirenments
+# for sync_woo
+RUN python3 -m pip install woocommerce
 # for ir_attachment_s3
-#RUN pip3 install boto3
+RUN pip3 install boto3
 RUN pip3 install python-slugify
 # for tests
 RUN pip3 install websocket-client

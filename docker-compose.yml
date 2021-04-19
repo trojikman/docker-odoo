@@ -14,13 +14,13 @@ x-default:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
     - ../vendor/pos-addons:/mnt/addons/pos-addons
-    # - ../vendor/sync-addons:/mnt/addons/sync-addons
-    # - ../vendor/mail-addons:/mnt/addons/mail-addons
+    - ../vendor/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/mail-addons:/mnt/addons/mail-addons
     - ../vendor/access-addons:/mnt/addons/access-addons
     - ../vendor/website-addons:/mnt/addons/website-addons
     - ../vendor/enterprise/12.0:/mnt/addons/enterprise
-    - ../vendor/misc-addons-store:/mnt/addons/misc-addons
-    # - ../vendor/web:/mnt/addons/web
+    - ../vendor/misc-addons:/mnt/addons/misc-addons
+    - ../vendor/queue:/mnt/addons/queue
     - ../vendor/odoo_vik_main:/mnt/addons/odoo_vik_main
 #    - ../ee-addons-store:/mnt/addons/ee-dep-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
@@ -37,14 +37,13 @@ services:
     << : *default-odoo
     # TODO: unify parameter passing for different cases to avoid making different branches
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'pos',
-              '--init', 'pos_debt_notebook_sync', # pos_receipt_custom_template
+    command: ['-d', 'woo',
+              '--init', 'sync_woo', # pos_receipt_custom_template pos_invoice_postponed
               '--db-filter=.*',
               '--workers=2',
-              # '--xmlrpc-port=8888',
               # '--without-demo=all',
               # '--test-enable',
-              # '--load=web,ir_attachment_url',
+              '--load=base,web,queue_job',
     ] # '--load=openapi,base,web', pos_product_available_negative
   db:
     image: postgres:10
@@ -67,10 +66,39 @@ services:
       driver: none
     volumes:
       - ./nginx/conf.d:/etc/nginx/conf.d
-    ports: ["80:80"]
+    ports: ["8014:80"]
     depends_on:
       - odoo
+  woo_db:
+    image: mysql:5.7
+    volumes:
+        - woo_db:/var/lib/mysql
+    environment:
+      MYSQL_ROOT_PASSWORD: pass
+      MYSQL_DATABASE: woo
+      MYSQL_USER: woo
+      MYSQL_PASSWORD: woo
+
+  woo:
+    image: wordpress:latest
+    depends_on:
+      - woo_db
+    ports:
+      - 80:80
+    environment:
+      WORDPRESS_DB_HOST: woo_db:3306
+      WORDPRESS_DB_USER: woo
+      WORDPRESS_DB_PASSWORD: woo
+    volumes:
+      - woo:/var/www/html/wp-content
+
+  woo_ssl:
+    image: foxylion/nginx-self-signed-https
+    environment:
+      REMOTE_URL: http://woo:80
 
 volumes:
   odoo-web-data:
   odoo-db-data:
+  woo:
+  woo_db:
