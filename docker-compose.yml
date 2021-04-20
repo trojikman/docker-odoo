@@ -13,15 +13,15 @@ x-default:
   volumes:
     - odoo-web-data:/var/lib/odoo
     - ./config:/etc/odoo
-    - ../vendor/pos-addons:/mnt/addons/pos-addons
+    # - ../vendor/pos-addons:/mnt/addons/pos-addons
     - ../vendor/sync-addons:/mnt/addons/sync-addons
-    - ../vendor/mail-addons:/mnt/addons/mail-addons
-    - ../vendor/access-addons:/mnt/addons/access-addons
-    - ../vendor/website-addons:/mnt/addons/website-addons
-    - ../vendor/enterprise/12.0:/mnt/addons/enterprise
-    - ../vendor/misc-addons:/mnt/addons/misc-addons
+    # - ../vendor/mail-addons:/mnt/addons/mail-addons
+    # - ../vendor/access-addons:/mnt/addons/access-addons
+    # - ../vendor/website-addons:/mnt/addons/website-addons
+    # - ../vendor/enterprise/12.0:/mnt/addons/enterprise
+    # - ../vendor/misc-addons:/mnt/addons/misc-addons
     - ../vendor/queue:/mnt/addons/queue
-    - ../vendor/odoo_vik_main:/mnt/addons/odoo_vik_main
+    # - ../vendor/odoo_vik_main:/mnt/addons/odoo_vik_main
 #    - ../ee-addons-store:/mnt/addons/ee-dep-addons
 #    - ../odoo12/odoo/addons:/mnt/addons/custom-addons
     # - ../odoo/addons/hw_proxy:/usr/lib/python3/dist-packages/odoo/addons/hw_proxy/
@@ -74,10 +74,10 @@ services:
     volumes:
         - woo_db:/var/lib/mysql
     environment:
-      MYSQL_ROOT_PASSWORD: pass
-      MYSQL_DATABASE: woo
-      MYSQL_USER: woo
-      MYSQL_PASSWORD: woo
+      MYSQL_ROOT_PASSWORD: mypassword
+      MYSQL_DATABASE: wordpress
+      MYSQL_USER: wordpress
+      MYSQL_PASSWORD: wordpress
 
   woo:
     image: wordpress:latest
@@ -87,8 +87,8 @@ services:
       - 80:80
     environment:
       WORDPRESS_DB_HOST: woo_db:3306
-      WORDPRESS_DB_USER: woo
-      WORDPRESS_DB_PASSWORD: woo
+      WORDPRESS_DB_USER: wordpress
+      WORDPRESS_DB_PASSWORD: wordpress
     volumes:
       - woo:/var/www/html/wp-content
 
