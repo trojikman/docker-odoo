@@ -4,8 +4,6 @@ USER root
 
 # Python Dependencies
 # TODO: сделать автоматическую установку зависимостей из файлов requirenments
-# for sync_woo
-RUN python3 -m pip install woocommerce
 # for ir_attachment_s3
 RUN pip3 install boto3
 RUN pip3 install python-slugify
@@ -56,5 +54,9 @@ RUN dpkg -i google-chrome-stable_current_amd64.deb
 # IT-Projects repos
 RUN mkdir -p /mnt/addons \
         && chown -R odoo /mnt/addons
+
+# for sync_woo
+RUN python3 -m pip install woocommerce
+RUN python3 -m pip install python-telegram-bot==12.8 PyGithub py-trello 
 
 USER odoo
