@@ -1,0 +1,79 @@
+version: '3.7'
+
+x-default:
+  &default-odoo
+  tty: true
+  build: .
+  depends_on:
+    - db
+    - wdb
+  ports:
+    - "8069:8069"
+    - "8072:8072"
+  volumes:
+    - odoo-web-data:/var/lib/odoo
+    - ./config:/etc/odoo
+    - ../vendor/sync-addons:/mnt/addons/sync-addons
+    - ../vendor/queue:/mnt/addons/queue
+    - ../vendor/misc-addons-store:/mnt/addons/misc-addons
+    - ../vendor/access-addons:/mnt/addons/access-addons
+    - ../vendor/website-addons:/mnt/addons/website-addons 
+    - ../vendor/pos-addons-store:/mnt/addons/pos-addons 
+    - ../vendor/enterprise/14.0:/mnt/addons/enterprise
+    - ../vendor/bikeparts:/mnt/addons/bikeparts
+
+
+  environment:
+#    - HOST=odoo
+#    - USER=odoo
+#    - PASSWORD=odoo
+    - WDB_SOCKET_SERVER=wdb
+    - WDB_NO_BROWSER_AUTO_OPEN=True
+#    - HOST=db
+#    - USER=odoo
+#    - PASSWORD=odoo
+
+services:
+  odoo:
+    << : *default-odoo
+    # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
+    command: ['-d', 'sync',
+              '--init', 'sync_twindis', # sync_twindis access_apps,sale_management,stock, access_restricted
+              '--db-filter=.*',
+              '--workers=2',
+              # '--without-demo=all',
+              # '--load=base,web,queue_job',
+              # '--test-enable',
+            #  '--load=web,ir_attachment_url',
+    ]
+    env_file:
+      - ../aws/aws-credentials.env
+#'--log-handler=odoo.addons.base.models.ir_module:DEBUG',
+  db:
+    image: postgres:10
+    logging:
+      driver: none
+    environment:
+      - POSTGRES_DB=postgres
+      - POSTGRES_PASSWORD=odoo
+      - POSTGRES_USER=odoo
+      - PGDATA=/var/lib/postgresql/data/pgdata
+    volumes:
+      - odoo-db-data:/var/lib/postgresql/data/pgdata
+  wdb:
+    image: kozea/wdb:3.3.0
+    ports: ['1984:1984']
+    init: true
+  nginx:
+    image: nginx
+    logging:
+      driver: none
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+    ports: ["80:80"]
+    depends_on:
+      - odoo
+
+volumes:
+  odoo-web-data:
+  odoo-db-data:
