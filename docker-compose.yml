@@ -15,11 +15,10 @@ x-default:
     - ./config:/etc/odoo
     - ../vendor/sync-addons:/mnt/addons/sync-addons
     - ../vendor/queue:/mnt/addons/queue
-    - ../vendor/misc-addons:/mnt/addons/misc-addons
+    - ../vendor/misc-addons-store:/mnt/addons/misc-addons
     - ../vendor/access-addons:/mnt/addons/access-addons
-    - ../vendor/website-addons:/mnt/addons/website-addons 
-    - ../vendor/pos-addons:/mnt/addons/pos-addons 
-    - ../vendor/enterprise/14.0:/mnt/addons/enterprise bikeparts
+    - ../vendor/pos-addons-store:/mnt/addons/pos-addons 
+    - ../vendor/enterprise:/mnt/addons/enterprise
     - ../vendor/bikeparts:/mnt/addons/bikeparts
 
 
@@ -37,12 +36,12 @@ services:
   odoo:
     << : *default-odoo
     # '--db-filter=^%d$$' в этой записи если не экранировать $, то вызовет ошибку
-    command: ['-d', 'sync',
-              '--init', 'sync_twindis', # sync_twindis access_apps,sale_management,stock, access_restricted
+    command: ['-d', 'pos',
+              '--init', 'sync_twindis', # sync_facebook
               '--db-filter=.*',
               '--workers=2',
-              # '--without-demo=all'
-             '--load=base,web,queue_job',
+              # '--without-demo=all',
+              # '--load=base,web,queue_job',
               # '--test-enable',
             #  '--load=web,ir_attachment_url',
     ]

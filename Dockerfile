@@ -7,6 +7,9 @@ USER root
 # for ir_attachment_s3
 RUN pip3 install boto3
 
+# for sync_facebook
+RUN pip3 install facebook_business
+
 RUN pip3 install python-slugify
 # for tests
 RUN pip3 install websocket-client
